@@ -28,6 +28,6 @@
     /* Output folder: */
     "outDir": "./dist"
   },
-  "include": ["**/*.ts"],
+  "include": ["main.ts", "src/**/*.ts"],
   "exclude": ["node_modules"]
 }

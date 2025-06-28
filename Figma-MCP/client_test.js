@@ -12,9 +12,7 @@ if (!FIGMA_TOKEN || !FIGMA_FILE_KEY) {
 
 const log = (message) => console.log(`[CLIENT] ${message}`);
 
-// --- THE DEFINITIVE FIX ---
-// We now run the compiled JavaScript file from the 'dist' folder.
-// This is the standard and most reliable way to run a Node.js/TypeScript project.
+
 const transport = new StdioClientTransport({
   command: "node",
   args: [
