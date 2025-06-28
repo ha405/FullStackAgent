@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    /* Base Options: */
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+
+    /* Strictness */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* If you are building for a library: */
+    // "declaration": true,
+
+    /* If you are building for a browser: */
+    // "lib": ["dom", "dom.iterable", "esnext"],
+    // "noFallthroughCasesInSwitch": true,
+
+    /* Module settings for a modern Node.js project: */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    /* Output folder: */
+    "outDir": "./dist"
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}
