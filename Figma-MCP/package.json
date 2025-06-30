@@ -9,13 +9,21 @@
     "@types/node": "^24.0.7",
     "axios": "^1.10.0",
     "axios-retry": "^4.5.0",
+    "cors": "^2.8.5",
     "dotenv": "^17.0.0",
     "js-yaml": "^4.1.0",
     "mcp-figma": "^0.1.1",
-    "node-fetch": "^3.3.2",
+    "mcp-sdk-client-ssejs": "^1.0.2",
+    "node-fetch": "^2.7.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3",
+    "uuid": "^11.1.0",
+    "xhr2": "^0.2.1",
     "zod": "^3.25.67",
     "zod-to-json-schema": "^3.24.6"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3"
   }
 }
