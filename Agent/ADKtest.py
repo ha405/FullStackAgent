@@ -65,7 +65,7 @@ async def figma_get_file_tool(fileKey: str) -> str:
 
             # 2. Parse the JSON string into a Python dictionary
             file_data = json.loads(raw_json_string)
-
+            print(file_data)
             # 3. Extract only the 'name' field that the LLM needs
             file_name = file_data.get('name')
 
