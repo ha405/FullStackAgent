@@ -41,7 +41,7 @@ def extract_figma_key(prompt: str) -> str | None:
 def build_tool_metadata(tools):
     meta = {}
     for t in tools:
-        schema = getattr(getattr(t, '_mcp_tool', None), 'inputSchema', {})
+        schema = t.inputSchema or {}
         props = schema.get('properties', {})
         required = set(schema.get('required', []))
         args_info = {}
@@ -50,7 +50,7 @@ def build_tool_metadata(tools):
                 'type': info.get('type', ''),
                 'desc': info.get('description', ''),
                 'required': arg in required,
-                'enum': info.get('enum')
+                'enum': info.get('enum', None)
             }
         meta[t.name] = args_info
     return meta
