@@ -130,11 +130,11 @@ class FigAgent:
                 except McpError as e:
                     print("MCP error:", e)
 
-def main():
-    import anyio
-    prompt = input("Enter your request: ")
-    agent = FigAgent()
-    anyio.run(agent.run, prompt)
+# def main():
+#     import anyio
+#     prompt = input("Enter your request: ")
+#     agent = FigAgent()
+#     anyio.run(agent.run, prompt)
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
