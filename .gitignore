@@ -1,5 +1,8 @@
 Figma-MCP/node_modules/
 Figma-MCP/.env
 Figma-MCP/dist
-Agent/venv
+/venv
 Agent/.env
+Agent/__pycache__
+Agent/patch/__pycache__
+/.env
