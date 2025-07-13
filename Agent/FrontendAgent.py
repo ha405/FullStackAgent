@@ -2,7 +2,12 @@ import json
 import os
 import time
 import asyncio
-from utils import *
+from google.adk.agents import LlmAgent
+from google.adk.runners import Runner
+from google.adk.sessions import InMemorySessionService
+from google.genai.types import Content, Part
+from google.adk.events import Event, EventActions
+
 
 class FrontendAgent:
     def __init__(self, output_dir: str, model: str = "gemini-2.5-pro"):
@@ -15,7 +20,7 @@ class FrontendAgent:
     async def run(self, frontend_plan: dict) -> None:
         instruction = (
             "You are a frontend scaffolding assistant.\n"
-            "INPUT: A JSON under 'frontendPlan' describing pages, components, styles, and behaviors.\n"
+            "INPUT: A JSON under describing pages, components, styles, image links, src, icons, texts, and behaviors.\n"
             "TASK: Return ONLY valid JSON with a single 'files' key whose value is an array of {path,content} objects.\n"
             "Do NOT output anything else."
         )
@@ -31,6 +36,8 @@ class FrontendAgent:
             user_id="user1",
             session_id="session_frontend"
         )
+        wrapped_plan = {"frontendPlan": frontend_plan}
+
         await self.svc.append_event(
             session,
             Event(
@@ -39,7 +46,7 @@ class FrontendAgent:
                 timestamp=time.time(),
                 content=Content(
                     role="system",
-                    parts=[Part(text=json.dumps({"frontendPlan": frontend_plan}, indent=2))]
+                    parts=[Part(text=json.dumps(wrapped_plan, indent=2))]
                 ),
                 actions=EventActions()
             )

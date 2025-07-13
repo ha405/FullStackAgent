@@ -1,8 +1,15 @@
-from utils import *
+from utils import extract_figma_key,params,build_tool_metadata
 import json
 import re
 import time
-
+from mcp import ClientSession
+from mcp.client.stdio import stdio_client, StdioServerParameters
+from google.adk.agents import LlmAgent
+from google.adk.runners import Runner
+from google.adk.sessions import InMemorySessionService
+from google.genai.types import Content, Part
+from google.adk.events import Event, EventActions
+from mcp.shared.exceptions import McpError
 class FigAgent:
     def __init__(self, user_id="user1", session_id="session1", model="gemini-2.5-pro"):
         self.user_id = user_id
@@ -85,12 +92,26 @@ class FigAgent:
                                 continue
 
                             raw_text = event.content.parts[0].text.strip()
-
-                            json_blobs = re.findall(r'\{[\s\S]*?\}(?=\s*$)', raw_text)
+                            if raw_text.startswith("```json") and raw_text.endswith("```"):
+                                raw_text = raw_text.removeprefix("```json").removesuffix("```").strip()
+                            json_blobs = []
+                            try:
+                                json_obj = json.loads(raw_text)
+                                json_blobs = [raw_text]
+                            except json.JSONDecodeError:
+                                for line in raw_text.splitlines():
+                                    line = line.strip()
+                                    if line.startswith("{") and line.endswith("}"):
+                                        try:
+                                            _ = json.loads(line)
+                                            json_blobs.append(line)
+                                        except json.JSONDecodeError:
+                                            print("Skipping invalid JSON block:\n", line)
 
                             if not json_blobs:
                                 print("Invalid JSON. Got:\n", raw_text)
                                 return
+
 
                             final_plan = None
                             for blob in json_blobs:
@@ -123,9 +144,9 @@ class FigAgent:
                                     print("Unrecognized JSON object:\n", call)
 
                             if final_plan:
-                                print("Final frontend_plan generated:")
-                                print(json.dumps(final_plan, indent=2))
-                                return
+                                # print("Final frontend_plan generated:")
+                                # print(json.dumps(final_plan, indent=2))
+                                return final_plan["frontendPlan"]
 
                 except McpError as e:
                     print("MCP error:", e)

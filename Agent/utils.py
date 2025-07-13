@@ -6,17 +6,13 @@ import json
 import anyio
 import time
 from dotenv import load_dotenv
-from mcp import ClientSession
 from mcp.client.stdio import stdio_client, StdioServerParameters
-from google.adk.agents import LlmAgent
-from google.adk.runners import Runner
-from google.adk.sessions import InMemorySessionService
-from google.genai.types import Content, Part
-from google.adk.events import Event, EventActions
-from mcp.shared.exceptions import McpError
 
 
 load_dotenv()
+FIGMA_AGENT_BASE =  os.getenv("FIGMA_AGENT_BASE")
+OUTPUT_DIR = os.getenv("OUTPUT_DIR")
+FIGMA_URL = os.getenv("FIGMA_URL")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 FIGMA_TOKEN = os.getenv("FIGMA_TOKEN")
 if not (GOOGLE_API_KEY and FIGMA_TOKEN):
